@@ -17,10 +17,12 @@
 <py-env>
     - paths:
         - /Lexical_Analyzer.py
+        - /Parser.py
 </py-env>
 <body>
     <py-script>
         from Lexical_Analyzer import *
+        from Parser import *
     </py-script>
   <div>
   <div class="bg-[#1E5BFA] h-96">
@@ -33,15 +35,18 @@
       <input type="text" placeholder="Masukkan Kalimat" id="inputSentence" class="w-96 h-9 rounded-md outline-none pl-5 ">
       <button type="submit" id="submit-button" pys-onclick="analyzeLexical" class=" ml-1 bg-white h-9 w-20 rounded-md text-[#1E5BFA] hover:bg-blue-200">Check</button>
     </div>
-    <div class="ml-auto mr-auto justify-center box-border items-center h-28 mt-4 border-4 border-[#1E5BFA] rounded-md"
+    <div class="ml-auto mr-auto justify-center box-border items-center h-40 mt-4 border-4 border-[#1E5BFA] rounded-md"
     style="width: 470px;">
-    <div id="output" class="text-center mt-5"></div>
+    <div id="output" class="text-center mt-10"></div>
+    
+    <div id="output2" class="text-center mt-5"></div>
+    </div> 
     
     </div> 
-    <h1 class="text-center font-semi-bold text-2xl mt-5">Bahasa Betawi</h1> 
+    <h1 class="text-center font-semi-bold text-2xl mt-44">Bahasa Betawi</h1> 
   </div>
   
-  <div class="container flex justify-center mx-auto mt-48">
+  <div class="container flex justify-center mx-auto mt-5">
     <div class="flex flex-col">
         <div class="w-full">
             <div class="border-b border-gray-200 shadow">
@@ -186,8 +191,13 @@
         sentence = Element('inputSentence').element.value
         if analyze(sentence) == True:
             pyscript.write('output', f'{sentence} is valid')
+            if parser(sentence) == True:
+                pyscript.write('output2', f'input string {sentence} diterima, sesuai grammar')
+            else:
+                pyscript.write('output2', 'Parser Error')
+
         else:
-            pyscript.write('output', 'Error')
+            pyscript.write('output', 'Lexical Error')
 </py-script>
 </body>
 </html>
