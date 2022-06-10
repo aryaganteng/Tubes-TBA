@@ -8,99 +8,94 @@ Original file is located at
 """
 
 #input 
-sentence = input('input kalimat :') 
-tokens = sentence.lower().split() 
-tokens.append('EOS') 
+#sentence = input('input kalimat :') 
+def parser(sentence):
+  tokens = sentence.lower().split() 
+  tokens.append('EOS') 
 
-#symbol 
-non_terminals = ['S','NN','VB'] 
-terminals=['bini','tisi','nganjang','nyai','embok','pangkeng','demen','benahin','bures','gaplok'] 
- 
-#parse table 
+  #symbol 
+  non_terminals = ['S','NN','VB'] 
+  terminals=['bini','tisi','nganjang','nyai','embok','pangkeng','demen','benahin','bures','gaplok'] 
+  
+  #parse table 
 
-parse_table ={} 
- 
-parse_table[('S', 'bini')] = ['NN','VB','NN'] 
-parse_table[('S', 'tisi')] = ['NN','VB','NN'] 
-parse_table[('S', 'nganjang')] = ['NN','VB','NN'] 
-parse_table[('S', 'nyai')] = ['NN','VB','NN'] 
-parse_table[('S', 'embok')] = ['NN','VB','NN'] 
-parse_table[('S', 'pangkeng')] = ['NN','VB','NN'] 
-parse_table[('S', 'demen')] = ['error'] 
-parse_table[('S', 'benahin')] = ['error'] 
-parse_table[('S', 'bures')] = ['error'] 
-parse_table[('S', 'gaplok')] = ['error'] 
-parse_table[('S', 'EOS')] = ['error'] 
- 
-parse_table[('NN', 'bini')] = ['bini'] 
-parse_table[('NN', 'tisi')] = ['tisi'] 
-parse_table[('NN', 'nganjang')] = ['nganjang'] 
-parse_table[('NN', 'nyai')] = ['nyai'] 
-parse_table[('NN', 'embok')] = ['embok'] 
-parse_table[('NN', 'pangkeng')] = ['pangkeng'] 
-parse_table[('NN', 'demen')] = ['error'] 
-parse_table[('NN', 'benahin')] = ['error'] 
-parse_table[('NN', 'bures')] = ['error'] 
-parse_table[('NN', 'gaplok')] = ['error'] 
-parse_table[('NN', 'EOS')] = ['error'] 
- 
-parse_table[('VB', 'bini')] = ['error'] 
-parse_table[('VB', 'tisi')] = ['error'] 
-parse_table[('VB', 'nganjang')] = ['error'] 
-parse_table[('VB', 'nyai')] = ['error'] 
-parse_table[('VB', 'embok')] = ['error'] 
-parse_table[('VB', 'pangkeng')] = ['error'] 
-parse_table[('VB', 'demen')] = ['demen'] 
-parse_table[('VB', 'benahin')] = ['benahin'] 
-parse_table[('VB', 'bures')] = ['bures'] 
-parse_table[('VB', 'gaplok')] = ['gaplok'] 
-parse_table[('NN', 'EOS')] = ['error']
+  parse_table ={} 
+  
+  parse_table[('S', 'bini')] = ['NN','VB','NN'] 
+  parse_table[('S', 'tisi')] = ['NN','VB','NN'] 
+  parse_table[('S', 'nganjang')] = ['NN','VB','NN'] 
+  parse_table[('S', 'nyai')] = ['NN','VB','NN'] 
+  parse_table[('S', 'embok')] = ['NN','VB','NN'] 
+  parse_table[('S', 'pangkeng')] = ['NN','VB','NN'] 
+  parse_table[('S', 'demen')] = ['error'] 
+  parse_table[('S', 'benahin')] = ['error'] 
+  parse_table[('S', 'bures')] = ['error'] 
+  parse_table[('S', 'gaplok')] = ['error'] 
+  parse_table[('S', 'EOS')] = ['error'] 
+  
+  parse_table[('NN', 'bini')] = ['bini'] 
+  parse_table[('NN', 'tisi')] = ['tisi'] 
+  parse_table[('NN', 'nganjang')] = ['nganjang'] 
+  parse_table[('NN', 'nyai')] = ['nyai'] 
+  parse_table[('NN', 'embok')] = ['embok'] 
+  parse_table[('NN', 'pangkeng')] = ['pangkeng'] 
+  parse_table[('NN', 'demen')] = ['error'] 
+  parse_table[('NN', 'benahin')] = ['error'] 
+  parse_table[('NN', 'bures')] = ['error'] 
+  parse_table[('NN', 'gaplok')] = ['error'] 
+  parse_table[('NN', 'EOS')] = ['error'] 
+  
+  parse_table[('VB', 'bini')] = ['error'] 
+  parse_table[('VB', 'tisi')] = ['error'] 
+  parse_table[('VB', 'nganjang')] = ['error'] 
+  parse_table[('VB', 'nyai')] = ['error'] 
+  parse_table[('VB', 'embok')] = ['error'] 
+  parse_table[('VB', 'pangkeng')] = ['error'] 
+  parse_table[('VB', 'demen')] = ['demen'] 
+  parse_table[('VB', 'benahin')] = ['benahin'] 
+  parse_table[('VB', 'bures')] = ['bures'] 
+  parse_table[('VB', 'gaplok')] = ['gaplok'] 
+  parse_table[('NN', 'EOS')] = ['error']
 
-# stack initialization 
-stack = [] 
-stack.append('#') 
-stack.append('S') 
+  # stack initialization 
+  stack = [] 
+  stack.append('#') 
+  stack.append('S') 
 
-# input reading initialization
-idx_token = 0
-symbol = tokens[idx_token]
- 
-#
-while (len(stack) > 0):
-  top = stack [len(stack) - 1]
-  print('top = ', top)
-  print('symbol = ', symbol)
-  if top in terminals:
-    print('top adalah simbol terminal')
-    if top == symbol:
-      stack.pop()
-      idx_token = idx_token + 1
-      symbol = tokens[idx_token]
-      if symbol == 'EOS':
-        print('isi stack: ', stack)
+  # input reading initialization
+  idx_token = 0
+  symbol = tokens[idx_token]
+  
+  #
+  while (len(stack) > 0):
+    top = stack [len(stack) - 1]
+    if top in terminals:
+      if top == symbol:
         stack.pop()
+        idx_token = idx_token + 1
+        symbol = tokens[idx_token]
+        if symbol == 'EOS':
+          stack.pop()
+      else:
+        print('error')
+        break;
+    elif top in non_terminals:
+      if parse_table[(top, symbol)][0] != 'error':
+          stack.pop()
+          symbols_to_be_pushed = parse_table[(top, symbol)]
+          for i in range(len(symbols_to_be_pushed)-1,-1,-1):
+              stack.append(symbols_to_be_pushed[i])
+      else:
+          print('error')
+          break;
     else:
       print('error')
       break;
-  elif top in non_terminals:
-    print('top adalah simbol non-terminal')
-    if parse_table[(top, symbol)][0] != 'error':
-        stack.pop()
-        symbols_to_be_pushed = parse_table[(top, symbol)]
-        for i in range(len(symbols_to_be_pushed)-1,-1,-1):
-            stack.append(symbols_to_be_pushed[i])
-    else:
-        print('error')
-        break;
-  else:
-    print('error')
-    break;
-  print('isi stack: ', stack)
-print()
- 
-# conclusion 
-print() 
-if symbol == 'EOS' and len(stack) == 0: 
-    print('Input string ', sentence, ' diterima, sesuai Grammar') 
-else: 
-    print('Error, input string: ', sentence, ', tidak diterima, tidak sesuai Grammar')
+  print()
+  
+  # conclusion 
+  print() 
+  if symbol == 'EOS' and len(stack) == 0: 
+     return True
+  else: 
+     return False
