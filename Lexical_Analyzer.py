@@ -49,7 +49,7 @@ def analyze(sentence):
     tabelTransisi[('q5', 'a')] = 'q6'
     tabelTransisi[('q6', 'h')] = 'q7'
     tabelTransisi[('q7', 'i')] = 'q8'
-    tabelTransisi[('q8', 'n')] = 'q9'
+    tabelTransisi[('q8', 'n')] = 'q45'
     tabelTransisi[('q45', '#')] = 'accept'
     tabelTransisi[('q45', ' ')] = 'q46'
     tabelTransisi[('q46', '#')] = 'accept'
